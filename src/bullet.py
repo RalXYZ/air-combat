@@ -1,3 +1,5 @@
+from src import constants
+
 bulletList = []
 
 
@@ -8,8 +10,6 @@ class Bullet:
         tempList = []
 
         for point in bulletList:
-            if point[1] > 100:
+            if point[0][1] > 0 or point[0][1] < constants.windowHeight:
                 tempList.append(point)
-            else:
-                pass;
         bulletList = tempList
