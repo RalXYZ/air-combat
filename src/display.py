@@ -38,11 +38,8 @@ def gameDisplay(screen):
         elif velocityFLag == 0:
             baseVelocity = (0, 0)
 
-        for point in bullet.bulletList:
-            screen.blit(bulletImg, (int(point[0][0]), int(point[0][1])))
-            point[0][0] += point[1][0] * 0.05
-            point[0][1] += point[1][1] * 0.05
-            point[0][1] -= 0.2
-        Bullet.rmOutOfScreen()
+        Bullet.fly()
+        Bullet.display(screen, bulletImg)
+        Bullet.removeOutside()
 
         pygame.display.update()
