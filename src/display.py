@@ -5,9 +5,9 @@ from src.bullet import Bullet
 
 
 def gameDisplay(screen):
-    from src import bullet
+    myBullet = Bullet()
+
     aircraftImg = pygame.image.load("../img/magenta_block.png")
-    bulletImg = pygame.image.load("../img/bullet.png")
 
     baseVelocity = (0, 0)
     velocityFLag = 0
@@ -26,10 +26,10 @@ def gameDisplay(screen):
             velocityFLag = 50
         if event.type == MOUSEBUTTONDOWN:
             if event.button == 1:  # LB
-                bullet.bulletList.append([list(pygame.mouse.get_pos()), baseVelocity])
+                myBullet.add([list(pygame.mouse.get_pos()), baseVelocity])
         if event.type == KEYDOWN:
             if event.key == K_k:
-                bullet.bulletList.append([list(pygame.mouse.get_pos()), baseVelocity])
+                myBullet.add([list(pygame.mouse.get_pos()), baseVelocity])
         elif event.type == QUIT:
             exit()
 
@@ -38,8 +38,8 @@ def gameDisplay(screen):
         elif velocityFLag == 0:
             baseVelocity = (0, 0)
 
-        Bullet.fly()
-        Bullet.display(screen, bulletImg)
-        Bullet.removeOutside()
+        myBullet.fly()
+        myBullet.display(screen)
+        myBullet.removeOutside()
 
         pygame.display.update()
