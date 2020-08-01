@@ -12,7 +12,7 @@ bullet = pygame.image.load("../img/bullet.png")
 bulletList = []
 
 while True:
-    screen.fill((255, 255, 255))
+    screen.fill((0, 0, 0))
 
     x, y = pygame.mouse.get_pos()
     x -= aircraft.get_width() / 2
