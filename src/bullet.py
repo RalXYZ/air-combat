@@ -7,24 +7,20 @@ class Bullet:
         self.__list = []
         self.__shootSpeed = 0.2
         self.__relativeSpeed = 0.05
-        self.__bulletImg = pygame.image.load("../img/bullet.png")
+        self.__bulletImg = pygame.image.load('../img/bullet.png')
 
-    def add(self, content: list) -> None:
-        self.__list.append(content)
+    def add(self, position: tuple, baseVelocity: tuple) -> None:
+        self.__list.append({'position': list(position), 'velocity': baseVelocity})
 
     def removeOutside(self) -> None:
-        tempList = []
-        for point in self.__list:
-            if 0 < point[0][1] < constants.windowHeight:
-                tempList.append(point)
-        self.__list = tempList
+        self.__list = list(filter(lambda point: 0 < point['position'][1] < constants.windowHeight, self.__list))
 
     def fly(self) -> None:
         for point in self.__list:
-            point[0][0] += point[1][0] * self.__relativeSpeed
-            point[0][1] += point[1][1] * self.__relativeSpeed
-            point[0][1] -= self.__shootSpeed
+            point['position'][0] += point['velocity'][0] * self.__relativeSpeed
+            point['position'][1] += point['velocity'][1] * self.__relativeSpeed
+            point['position'][1] -= self.__shootSpeed
 
     def display(self, screen) -> None:
         for point in self.__list:
-            screen.blit(self.__bulletImg, (int(point[0][0]), int(point[0][1])))
+            screen.blit(self.__bulletImg, (int(point['position'][0]), int(point['position'][1])))

@@ -1,13 +1,15 @@
 import pygame
-from pygame.locals import *
-from sys import exit
 from src.bullet import Bullet
+
+enemyEmergeTime = 1000
+enemyEmergeEventID = pygame.USEREVENT + 1
 
 
 def gameDisplay(screen):
     myBullet = Bullet()
+    pygame.time.set_timer(enemyEmergeEventID, enemyEmergeTime)
 
-    aircraftImg = pygame.image.load("../img/magenta_block.png")
+    aircraftImg = pygame.image.load('../img/magenta_block.png')
 
     baseVelocity = (0, 0)
     velocityFLag = 0
@@ -21,16 +23,18 @@ def gameDisplay(screen):
         screen.blit(aircraftImg, (int(x), int(y)))
 
         event = pygame.event.poll()
-        if event.type == MOUSEMOTION:
+        if event.type == pygame.MOUSEMOTION:
             baseVelocity = event.rel
             velocityFLag = 50
-        if event.type == MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:  # LB
-                myBullet.add([list(pygame.mouse.get_pos()), baseVelocity])
-        if event.type == KEYDOWN:
-            if event.key == K_k:
-                myBullet.add([list(pygame.mouse.get_pos()), baseVelocity])
-        elif event.type == QUIT:
+                myBullet.add(pygame.mouse.get_pos(), baseVelocity)
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_k:
+                myBullet.add(pygame.mouse.get_pos(), baseVelocity)
+        elif event.type == enemyEmergeEventID:
+            pass  # TODO: enemy aircraft emerge
+        elif event.type == pygame.QUIT:
             exit()
 
         if velocityFLag > 0:
