@@ -1,49 +1,53 @@
 import pygame
 from src.bullet import Bullet
+from src.aircraft import Aircraft
 
-enemyEmergeTime = 1000
-enemyEmergeEventID = pygame.USEREVENT + 1
+enemy_emerge_time = 1000
+enemy_emerge_event_id = pygame.USEREVENT + 1
 
 
 def gameDisplay(screen):
-    myBullet = Bullet()
-    pygame.time.set_timer(enemyEmergeEventID, enemyEmergeTime)
+    my_bullet = Bullet()
+    enemy_aircraft = Aircraft()
+    pygame.time.set_timer(enemy_emerge_event_id, enemy_emerge_time)
 
-    aircraftImg = pygame.image.load('../img/magenta_block.png')
+    aircraft_img = pygame.image.load('../img/magenta_block.png')
 
-    baseVelocity = (0, 0)
-    velocityFLag = 0
+    base_velocity = (0, 0)
+    velocity_flag = 0
 
     while True:
         screen.fill((0, 0, 0))
 
         x, y = pygame.mouse.get_pos()
-        x -= aircraftImg.get_width() / 2
-        y -= aircraftImg.get_height() / 2
-        screen.blit(aircraftImg, (int(x), int(y)))
+        x -= aircraft_img.get_width() / 2
+        y -= aircraft_img.get_height() / 2
+        screen.blit(aircraft_img, (int(x), int(y)))
 
         event = pygame.event.poll()
         if event.type == pygame.MOUSEMOTION:
-            baseVelocity = event.rel
-            velocityFLag = 50
+            base_velocity = event.rel
+            velocity_flag = 50
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:  # LB
-                myBullet.add(pygame.mouse.get_pos(), baseVelocity)
+                my_bullet.add(pygame.mouse.get_pos(), base_velocity)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_k:
-                myBullet.add(pygame.mouse.get_pos(), baseVelocity)
-        elif event.type == enemyEmergeEventID:
-            pass  # TODO: enemy aircraft emerge
+                my_bullet.add(pygame.mouse.get_pos(), base_velocity)
+        elif event.type == enemy_emerge_event_id:
+            enemy_aircraft.spawn()
         elif event.type == pygame.QUIT:
             exit()
 
-        if velocityFLag > 0:
-            velocityFLag -= 1
-        elif velocityFLag == 0:
-            baseVelocity = (0, 0)
+        if velocity_flag > 0:
+            velocity_flag -= 1
+        elif velocity_flag == 0:
+            base_velocity = (0, 0)
 
-        myBullet.fly()
-        myBullet.display(screen)
-        myBullet.removeOutside()
+        my_bullet.fly()
+        my_bullet.display(screen)
+        my_bullet.remove_outside()
+
+        enemy_aircraft.display(screen)
 
         pygame.display.update()

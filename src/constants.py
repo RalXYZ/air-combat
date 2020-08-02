@@ -1,2 +1,2 @@
-windowWidth = 640
-windowHeight = 480
+WINDOW_WIDTH = 640
+WINDOW_HEIGHT = 480
