@@ -1,6 +1,5 @@
 import pygame
-from src.bullet import Bullet
-from src.aircraft import Aircraft
+from src.entity import Bullet, Aircraft
 
 enemy_emerge_time = 1000
 enemy_emerge_event_id = pygame.USEREVENT + 1
@@ -30,12 +29,12 @@ def gameDisplay(screen):
             velocity_flag = 50
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:  # LB
-                my_bullet.add(pygame.mouse.get_pos(), base_velocity)
+                my_bullet.new(pygame.mouse.get_pos(), base_velocity)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_k:
-                my_bullet.add(pygame.mouse.get_pos(), base_velocity)
+                my_bullet.new(pygame.mouse.get_pos(), base_velocity)
         elif event.type == enemy_emerge_event_id:
-            enemy_aircraft.spawn()
+            enemy_aircraft.new()
         elif event.type == pygame.QUIT:
             exit()
 
