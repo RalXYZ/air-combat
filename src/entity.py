@@ -1,4 +1,5 @@
-import random, abc
+import random
+import abc
 import pygame
 from src import constants
 
@@ -61,5 +62,3 @@ class Aircraft(Entity):
                         (bullet['position'][1] - self.image.get_height() / 2) < self.list[i]['position'][1] < (bullet['position'][1] + self.image.get_height() / 2):
                     del self.list[i]
                     return
-
-
