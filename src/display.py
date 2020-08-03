@@ -48,5 +48,8 @@ def gameDisplay(screen):
         my_bullet.remove_outside()
 
         enemy_aircraft.display(screen)
+        enemy_aircraft.hit_bullet(my_bullet.list)
+        enemy_aircraft.fly()
+        enemy_aircraft.remove_outside()
 
         pygame.display.update()
